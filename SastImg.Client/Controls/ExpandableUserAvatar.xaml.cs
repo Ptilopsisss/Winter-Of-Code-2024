@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using SastImg.Client.Helpers;
 using Windows.Foundation;
 using Windows.Graphics;
@@ -22,7 +23,7 @@ public sealed partial class ExpandableUserAvatar : UserControl
     public StartTransitionAction StartAction;
     public StartTransitionAction EndAction;
     private CancellationTokenSource? _startCts;
-    public ExpandableUserAvatar ( )
+    public ExpandableUserAvatar()
     {
         this.InitializeComponent();
 
@@ -47,7 +48,7 @@ public sealed partial class ExpandableUserAvatar : UserControl
             _startCts = new CancellationTokenSource();
 
             await Task.Delay(650);
-            DispatcherQueue.TryEnqueue(( ) =>
+            DispatcherQueue.TryEnqueue(() =>
             {
                 SetTitleBarInteractivityArea();
             });
@@ -55,11 +56,11 @@ public sealed partial class ExpandableUserAvatar : UserControl
             {
                 await Task.Delay(150, _startCts.Token);
             }
-            catch ( Exception )
+            catch (Exception)
             { }
-            if ( !_startCts.Token.IsCancellationRequested )
+            if (!_startCts.Token.IsCancellationRequested)
             {
-                DispatcherQueue.TryEnqueue(( ) =>
+                DispatcherQueue.TryEnqueue(() =>
                 {
                     ResetTitleBarInteractivityArea();
                     EndAction?.Execute(sender, new());
@@ -80,10 +81,10 @@ public sealed partial class ExpandableUserAvatar : UserControl
         };
     }
 
-    private void SetTitleBarInteractivityArea ( )
+    private void SetTitleBarInteractivityArea()
     {
         Debug.WriteLine("SetTitleBarInteractivityArea");
-        if ( App.MainWindow is Window window )
+        if (App.MainWindow is Window window)
         {
             var nonClientInputSrc = InputNonClientPointerSource.GetForWindowId(window.AppWindow.Id);
             var interactiveArea = SecondControl as FrameworkElement;
@@ -98,13 +99,13 @@ public sealed partial class ExpandableUserAvatar : UserControl
                 _Height: (int)Math.Round(bounds.Height * scale)
             );
             var old_rects = nonClientInputSrc.GetRegionRects(NonClientRegionKind.Passthrough);
-            if ( FlyoutNonClientArea is not null )
+            if (FlyoutNonClientArea is not null)
             {
                 old_rects = old_rects.Where(old_rects => old_rects != FlyoutNonClientArea).ToArray();
                 FlyoutNonClientArea = null;
             }
 
-            if ( !old_rects.Contains(transparentRect) )
+            if (!old_rects.Contains(transparentRect))
             {
                 FlyoutNonClientArea = transparentRect;
                 nonClientInputSrc.SetRegionRects(NonClientRegionKind.Passthrough, old_rects.Append(transparentRect).ToArray()); // areas defined will be click through and can host button and textboxes
@@ -112,12 +113,12 @@ public sealed partial class ExpandableUserAvatar : UserControl
         }
     }
 
-    private void ResetTitleBarInteractivityArea ( )
+    private void ResetTitleBarInteractivityArea()
     {
         Debug.WriteLine("ResetTitleBarInteractivityArea");
-        if ( App.MainWindow is Window window )
+        if (App.MainWindow is Window window)
         {
-            if ( FlyoutNonClientArea is not null )
+            if (FlyoutNonClientArea is not null)
             {
                 var nonClientInputSrc = InputNonClientPointerSource.GetForWindowId(window.AppWindow.Id);
                 var old_rects = nonClientInputSrc.GetRegionRects(NonClientRegionKind.Passthrough);
@@ -131,8 +132,6 @@ public sealed partial class ExpandableUserAvatar : UserControl
     private static RectInt32? FlyoutNonClientArea;
 
     #region Properties
-
-
 
     public object FlyoutContent
     {
@@ -164,7 +163,25 @@ public sealed partial class ExpandableUserAvatar : UserControl
     public static readonly DependencyProperty EmailProperty =
         DependencyProperty.Register("Email", typeof(string), typeof(ExpandableUserAvatar), new PropertyMetadata(null));
 
+    public Uri AvatarUri
+    {
+        get { return (Uri)GetValue(AvatarUriProperty); }
+        set { SetValue(AvatarUriProperty, value); }
+    }
 
+    // Using a DependencyProperty as the backing store for AvatarUri.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty AvatarUriProperty =
+        DependencyProperty.Register("AvatarUri", typeof(Uri), typeof(ExpandableUserAvatar), new PropertyMetadata(null));
+
+    public BitmapImage Avatar
+    {
+        get { return (BitmapImage)GetValue(AvatarProperty); }
+        set { SetValue(AvatarProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for AvatarUri.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty AvatarProperty =
+        DependencyProperty.Register("Avatar", typeof(BitmapImage), typeof(ExpandableUserAvatar), new PropertyMetadata(null));
 
     #endregion
 }

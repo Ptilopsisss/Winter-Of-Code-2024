@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace SastImg.Client.Services;
@@ -15,6 +16,14 @@ public class AuthService ( )
     public string? Token => _token;
     public bool IsLoggedIn => _isLoggedIn;
     public string? Username => _username;
+
+    private long _id;
+
+    public long Id
+    {
+        get => _id;
+        set => _id = value;
+    }
 
     /// <summary>
     /// 登录，如果登录成功则返回 true，登录状态会保存在该Service中
@@ -38,6 +47,7 @@ public class AuthService ( )
             _username = username;
             _isLoggedIn = true;
             LoginStateChanged?.Invoke(true, username); // 触发登陆成功事件
+            Id = GetUserIdFromToken();
         }
         catch
         {
@@ -56,6 +66,22 @@ public class AuthService ( )
         _isLoggedIn = false;
         _isLoggedIn = false;
         LoginStateChanged?.Invoke(false, null); // 触发登出事件
+    }
+
+    public long GetUserIdFromToken()
+    {
+        if (string.IsNullOrEmpty(_token))
+            return -2;
+
+        var handler = new JwtSecurityTokenHandler();
+        var jsonToken = handler.ReadToken(_token) as JwtSecurityToken;
+
+        var userIdClaim = jsonToken.Claims?.FirstOrDefault(claim => claim.Type == "id");
+        if (userIdClaim == null || !long.TryParse(userIdClaim.Value, out long userId))
+        {
+            return -1;
+        }
+        return userId;
     }
 
     public event Action<bool,string?>? LoginStateChanged; // 当登录状态改变时触发事件。传递的第一个参数表示是否登录，第二个参数表示登录的用户名

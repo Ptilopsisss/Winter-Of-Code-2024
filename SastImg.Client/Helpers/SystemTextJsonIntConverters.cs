@@ -11,20 +11,27 @@ namespace SastImg.Client.Helpers
     {
         public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonTokenType.String)
+            try
             {
-                string stringValue = reader.GetString() ?? "0";
-                if (int.TryParse(stringValue, out int value))
+                if (reader.TokenType == JsonTokenType.String)
                 {
-                    return value;
+                    string stringValue = reader.GetString() ?? "0";
+                    if (int.TryParse(stringValue, out int value))
+                    {
+                        return value;
+                    }
+                }
+                else if (reader.TokenType == JsonTokenType.Number)
+                {
+                    return reader.GetInt32();
                 }
             }
-            else if (reader.TokenType == JsonTokenType.Number)
+            catch (JsonException)
             {
-                return reader.GetInt32();
+                // 忽略异常
             }
 
-            throw new System.Text.Json.JsonException();
+            return 0; // 或者返回一个默认值
         }
 
         public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
@@ -36,20 +43,27 @@ namespace SastImg.Client.Helpers
     {
         public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonTokenType.String)
+            try
             {
-                string stringValue = reader.GetString() ?? "0";
-                if (long.TryParse(stringValue, out long value))
+                if (reader.TokenType == JsonTokenType.String)
                 {
-                    return value;
+                    string stringValue = reader.GetString() ?? "0";
+                    if (long.TryParse(stringValue, out long value))
+                    {
+                        return value;
+                    }
+                }
+                else if (reader.TokenType == JsonTokenType.Number)
+                {
+                    return reader.GetInt64();
                 }
             }
-            else if (reader.TokenType == JsonTokenType.Number)
+            catch (JsonException)
             {
-                return reader.GetInt64();
+                // 忽略异常
             }
 
-            throw new System.Text.Json.JsonException();
+            return 0L; // 或者返回一个默认值
         }
 
         public override void Write(Utf8JsonWriter writer, long value, JsonSerializerOptions options)

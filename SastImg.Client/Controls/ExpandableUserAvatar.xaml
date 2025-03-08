@@ -66,7 +66,8 @@
                             Width="64"
                             Height="64"
                             labs:TransitionHelper.Id="image"
-                            DisplayName="{x:Bind UserName, Mode=OneWay}" />
+                            DisplayName="{x:Bind UserName, Mode=OneWay}"
+                            ProfilePicture="{x:Bind Avatar, Mode=OneWay}" />
                         <Grid
                             Grid.Column="1"
                             labs:TransitionHelper.Id="text"
@@ -118,7 +119,8 @@
                         Width="32"
                         Height="32"
                         labs:TransitionHelper.Id="image"
-                        DisplayName="{x:Bind UserName, Mode=OneWay}" />
+                        DisplayName="{x:Bind UserName, Mode=OneWay}"
+                        ProfilePicture="{x:Bind Avatar, Mode=OneWay}" />
                 </Grid>
             </Grid>
 

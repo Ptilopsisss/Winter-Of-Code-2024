@@ -20,9 +20,9 @@
             IsEnabled="{x:Bind helper:BindHelper.Not(IsLoggingIn), Mode=OneWay}"
             Text="{x:Bind Username, Mode=TwoWay}"
             PlaceholderText="用户名" />
-        <TextBox
+        <PasswordBox
             IsEnabled="{x:Bind helper:BindHelper.Not(IsLoggingIn), Mode=OneWay}"
-            Text="{x:Bind Password, Mode=TwoWay}"
+            Password="{x:Bind Password, Mode=TwoWay}"
             PlaceholderText="密码" />
         <TextBlock
             Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="登录错误，请重试" Visibility="{x:Bind IsLoginFailed, Mode=OneWay}" />

@@ -13,13 +13,13 @@ namespace SastImg.Client;
 
 public partial class App : Application
 {
-    public App ( )
+    public App()
     {
         this.InitializeComponent();
         API = new SastImgAPI("http://sastwoc2024.shirasagi.space:5263/");
     }
 
-    protected override void OnLaunched (Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
     {
         Shell = new ShellPage();
         MainWindow = new Window()
@@ -32,6 +32,17 @@ public partial class App : Application
         MainWindow.AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         MainWindow.Activate();
         WindowHelper.TrackWindow(MainWindow);
+    }
+
+    public static bool TryGoBack()
+    {
+        Frame? rootFrame = Window.Current.Content as Frame;
+        if (rootFrame.CanGoBack)
+        {
+            rootFrame.GoBack();
+            return true;
+        }
+        return false;
     }
 
     public static ShellPage? Shell;

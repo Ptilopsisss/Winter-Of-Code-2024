@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="SastImg.Client.Views.TestView"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:local="using:SastImg.Client.Views"
+       Height="auto" Width="auto">
+
+    <SplitView IsPaneOpen="True"
+               DisplayMode="Inline"
+               OpenPaneLength="290">
+        <SplitView.Pane>
+            <ListBox x:Name="AlbumsList"
+                     Grid.Column="0"
+                     Grid.RowSpan="2"
+                     ItemsSource="{x:Bind ViewModel.Albums,Mode=OneWay}" 
+                     DisplayMemberPath="Title"
+                     SelectionMode="Single"
+                     SelectedItem="{x:Bind ViewModel.SelectedAlbum, Mode=TwoWay}" 
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"/>
+        </SplitView.Pane>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="0.2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.7*"/>
+            </Grid.ColumnDefinitions>
+
+            <ProgressRing x:Name="albumloadingRing"
+                Grid.ColumnSpan="2"
+                Grid.Row="0"
+                IsActive="True"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="80"
+                Height="80"
+                Margin="20"/>
+            <StackPanel Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Stretch"
+                        BorderBrush="DimGray"
+                        BorderThickness="2"
+                        CornerRadius="5"
+                        Padding="20">
+                <StackPanel Margin="10" Orientation="Vertical" VerticalAlignment="Center">
+                    <TextBlock Text="Category ID:" FontWeight="Bold"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedAlbum.Category, Mode=OneWay}" IsTextSelectionEnabled="True"/>
+                </StackPanel>
+                <StackPanel x:Name="AuthorIdPanel" Margin="10" Orientation="Vertical" VerticalAlignment="Center">
+                    <TextBlock Text="Author ID:" FontWeight="Bold"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedAlbum.Author, Mode=OneWay}" IsTextSelectionEnabled="True"/>
+                </StackPanel>
+                <StackPanel x:Name="AccessLevelPanel" Margin="10" Orientation="Vertical" VerticalAlignment="Center" Visibility="Collapsed">
+                    <TextBlock Text="AccessLevel:" FontWeight="Bold"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedAlbum.AccessLevel, Mode=OneWay}" IsTextSelectionEnabled="True"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Vertical" VerticalAlignment="Center">
+                    <TextBlock Text="Album ID:" FontWeight="Bold"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedAlbum.Id, Mode=OneWay}" IsTextSelectionEnabled="True"/>
+                </StackPanel>
+                <StackPanel x:Name="UpdateAtPanel" Margin="10" Orientation="Vertical" VerticalAlignment="Center">
+                    <TextBlock Text="Last Updated:" FontWeight="Bold"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedAlbum.UpdatedAt, Mode=OneWay}" IsTextSelectionEnabled="True"/>
+                </StackPanel>
+                <StackPanel x:Name="RemovedAtPanel" Margin="10" Orientation="Vertical" VerticalAlignment="Center" Visibility="Collapsed">
+                    <TextBlock Text="Removed At:" FontWeight="Bold"/>
+                    <TextBlock Text="{x:Bind ViewModel.SelectedAlbum.RemovedAt, Mode=OneWay}" IsTextSelectionEnabled="True"/>
+                </StackPanel>
+                <Button x:Name="DeleteAlbumButton" 
+                        Content="Delete this Album" 
+                        Click="DeleteAlbumButton_Click"
+                        FontWeight="Bold"
+                        BorderBrush="Gray"
+                       BorderThickness="1"
+                       CornerRadius="5"
+                        IsEnabled="False"/>
+                <Button x:Name="UpdateAlbumButton"
+                        Content="Update Album Info"
+                        Click="UpdateAlbumButton_Click"
+                        FontWeight="Bold"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        IsEnabled="False"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="10" Orientation="Vertical">
+                <TextBlock x:Name="ImageListTitle" Text="Images in Album" FontWeight="Bold" FontSize="18" />
+                <ListView ItemsSource="{x:Bind ViewModel.Images,Mode=OneWay}"
+                          DisplayMemberPath="Title"
+                          SelectionMode="Single"
+                          SelectedItem="{x:Bind ViewModel.SelectedImage, Mode=TwoWay}"
+                          DoubleTapped="ListView_DoubleTapped"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Stretch">
+                </ListView>
+                <ProgressRing x:Name="imgtitleloadingRing"
+                              IsActive="False"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              Width="50"
+                              Height="50"
+                              Margin="20"/>
+            </StackPanel>
+            <Grid VerticalAlignment="Bottom"
+                  HorizontalAlignment="Center"
+                  Grid.ColumnSpan="2"
+                  Margin="0,0,0,5">
+                <StackPanel Orientation="Horizontal">
+
+                    <Button x:Name="GetRemovedAlbumButton"
+                        Content="Get Removed Album" 
+                        Click="GetRemovedAlbumButton_Click"
+                        FontWeight="Bold"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        CornerRadius="5"/>
+                    <Button x:Name="GetRemovedImageButton"
+                            Content="Get Removed Image" 
+                        Click="GetRemovedImageButton_Click"
+                        FontWeight="Bold"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Visibility="Collapsed"/>
+                    <Button x:Name="RestoreAlbumButton"
+                            Content="Restore Selected Album"
+                            Click="RestoreAlbumButton_Click"
+                            FontWeight="Bold"
+                            BorderBrush="Gray"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            Visibility="Collapsed"/>
+                    <Button x:Name="RestoreImageButton"
+                            Content="Restore Selected Image"
+                            Click="RestoreImageButton_Click"
+                            FontWeight="Bold"
+                            BorderBrush="Gray"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            Visibility="Collapsed"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Image x:Name="img"
+                       Stretch="Uniform"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="10"/>
+                <ProgressRing x:Name="imgloadingRing"
+                              IsActive="False"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Width="80"
+                              Height="80"/>
+            </Grid>
+        </Grid>
+    </SplitView>
+</Page>

@@ -18,6 +18,11 @@
 
     <ItemGroup>
         <Content Include="Assets\**" />
+        <None Remove="Views\CategoryView.xaml" />
+        <None Remove="Views\CreatAlbumView.xaml" />
+        <None Remove="Views\CreatCatagoryView.xaml" />
+        <None Remove="Views\UpdateAlbumView.xaml" />
+        <None Remove="Views\UploadView.xaml" />
         <Manifest Include="$(ApplicationManifest)" />
         <ProjectCapability Include="Msix" />
         <PackageReference Include="CommunityToolkit.Labs.WinUI.TitleBar" Version="0.0.1-build.1830" />
@@ -31,13 +36,45 @@
         <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
         <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.1.240916" />
         <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.1.240916" />
+        <PackageReference Include="Markdown" Version="2.2.1" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
         <PackageReference Include="Refit" Version="8.0.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.6.1" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Services\API\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\UpdateAlbumView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\CategoryView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\CreatCatagoryView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\CreatAlbumView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\UploadView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
     </ItemGroup>
 </Project>
