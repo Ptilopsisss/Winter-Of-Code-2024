@@ -73,7 +73,9 @@ public partial class ShellPageViewModel : ObservableObject
             var result = await App.API.User.GetAvatarAsync(App.AuthService.Id);
             if (result.IsSuccessStatusCode && result.Content != null)
             {
-                using var memoryStream = new MemoryStream(result.Content.FileStream);
+                using var memoryStream = new MemoryStream();
+                await result.Content.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
                 var bitmapImage = new BitmapImage();
                 await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
                 Avatar = bitmapImage;

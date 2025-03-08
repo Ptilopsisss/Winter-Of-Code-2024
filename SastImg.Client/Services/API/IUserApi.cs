@@ -93,7 +93,7 @@ namespace SastImg.Client.Service.API
         /// </returns>
         [Headers("Accept: text/plain, application/json, text/json")]
         [Get("/api/users/{id}/avatar")]
-        Task<IApiResponse<FileStreamResult>> GetAvatarAsync(long id, CancellationToken cancellationToken = default);
+        Task<IApiResponse<Stream>> GetAvatarAsync(long id, CancellationToken cancellationToken = default);
 
         /// <summary>GetHeader</summary>
         /// <remarks>Get the header image file of the specific user.</remarks>
