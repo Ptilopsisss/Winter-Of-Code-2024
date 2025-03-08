@@ -1,13 +1,11 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Threading.Tasks;
+﻿using System.IdentityModel.Tokens.Jwt;
 
 namespace SastImg.Client.Services;
 
 /// <summary>
 /// 用于管理用户登录状态的服务
 /// </summary>
-public class AuthService ( )
+public class AuthService()
 {
     private string? _token;
     private bool _isLoggedIn;
@@ -28,7 +26,7 @@ public class AuthService ( )
     /// <summary>
     /// 登录，如果登录成功则返回 true，登录状态会保存在该Service中
     /// </summary>
-    public async Task<bool> LoginAsync (string username, string password)
+    public async Task<bool> LoginAsync(string username, string password)
     {
         _token = null;
         _username = null;
@@ -38,9 +36,9 @@ public class AuthService ( )
         {
             var result = await App.API!.Account.LoginAsync(new() { Username = username, Password = password });
 
-            if ( result.IsSuccessStatusCode == false )
+            if (result.IsSuccessStatusCode == false)
                 return false;
-            if ( result.Content?.Token == null )
+            if (result.Content?.Token == null)
                 return false;
 
             _token = result.Content?.Token;
@@ -60,7 +58,7 @@ public class AuthService ( )
     /// <summary>
     /// 登出
     /// </summary>
-    public void Logout ( )
+    public void Logout()
     {
         _token = null;
         _isLoggedIn = false;
@@ -84,5 +82,5 @@ public class AuthService ( )
         return userId;
     }
 
-    public event Action<bool,string?>? LoginStateChanged; // 当登录状态改变时触发事件。传递的第一个参数表示是否登录，第二个参数表示登录的用户名
+    public event Action<bool, string?>? LoginStateChanged; // 当登录状态改变时触发事件。传递的第一个参数表示是否登录，第二个参数表示登录的用户名
 }

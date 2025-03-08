@@ -10,17 +10,29 @@
     mc:Ignorable="d">
 
     <Grid>
-        <StackPanel>
+        <StackPanel Orientation="Vertical">
             <TextBlock
-                Margin="56,40"
+                Margin="56,40,0,0"
                 Style="{ThemeResource TitleLargeTextBlockStyle}"
                 Text="SAST Image" />
+            <TextBlock
+                Margin="56,0"
+                Text="by Ptilopsis"
+                FontSize="20"
+                Foreground="Gray"/>
         </StackPanel>
-        <Button Click="Button_Click" 
-                Width="50"
-                Height="50"
-                HorizontalAlignment="Center">
-            <FontIcon Glyph="&#xE8EC;" />
-        </Button>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Button Click="Button_Click" 
+        Width="50"
+        Height="50"
+        HorizontalAlignment="Center">
+                <FontIcon Glyph="&#xE8EC;" />
+            </Button>
+            <TextBlock Text="Category View"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -9,7 +9,6 @@
 //
 //*********************************************************
 
-using System.Collections.Generic;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -25,7 +24,7 @@ namespace SastImg.Client.Helpers;
 // windows.  In the future, we would like to support this in platform APIs.
 public class WindowHelper
 {
-    static public Window CreateWindow ( )
+    static public Window CreateWindow()
     {
         var newWindow = new Window
         {
@@ -35,7 +34,7 @@ public class WindowHelper
         return newWindow;
     }
 
-    static public void TrackWindow (Window window)
+    static public void TrackWindow(Window window)
     {
         window.Closed += (sender, args) =>
         {
@@ -44,33 +43,33 @@ public class WindowHelper
         _activeWindows.Add(window);
     }
 
-    static public AppWindow GetAppWindow (Window window)
+    static public AppWindow GetAppWindow(Window window)
     {
         nint hWnd = WindowNative.GetWindowHandle(window);
         WindowId wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
         return AppWindow.GetFromWindowId(wndId);
     }
 
-    static public Window GetWindowForElement (UIElement element)
+    static public Window GetWindowForElement(UIElement element)
     {
-        if ( element.XamlRoot != null )
+        if (element.XamlRoot != null)
         {
-            foreach ( Window window in _activeWindows )
+            foreach (Window window in _activeWindows)
             {
-                if ( element.XamlRoot == window.Content.XamlRoot )
+                if (element.XamlRoot == window.Content.XamlRoot)
                     return window;
             }
         }
         return null;
     }
     // get dpi for an element
-    static public double GetRasterizationScaleForElement (UIElement element)
+    static public double GetRasterizationScaleForElement(UIElement element)
     {
-        if ( element.XamlRoot != null )
+        if (element.XamlRoot != null)
         {
-            foreach ( Window window in _activeWindows )
+            foreach (Window window in _activeWindows)
             {
-                if ( element.XamlRoot == window.Content.XamlRoot )
+                if (element.XamlRoot == window.Content.XamlRoot)
                     return element.XamlRoot.RasterizationScale;
             }
         }

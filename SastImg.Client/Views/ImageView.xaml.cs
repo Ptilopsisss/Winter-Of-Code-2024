@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using SastImg.Client.ViewModels;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SastImg.Client.Views
 {
@@ -74,7 +73,7 @@ namespace SastImg.Client.Views
                 imageId: ImageId,
                 cancellationToken: CancellationToken.None
                 );
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 DeleteMessage.Text = "Delete successful!";
             }

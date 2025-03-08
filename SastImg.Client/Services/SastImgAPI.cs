@@ -1,12 +1,8 @@
-﻿using System;
-using System.Net.Http;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Refit;
-using SastImg.Client.Service.API;
+﻿using Refit;
 using SastImg.Client.Helpers;
+using SastImg.Client.Service.API;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SastImg.Client.Services;
 
@@ -23,13 +19,13 @@ public class SastImgAPI
     public ITagApi Tag { get; private set; }
     public IUserApi User { get; private set; }
 
-    public SastImgAPI (string endpointUrl)
+    public SastImgAPI(string endpointUrl)
     {
 
         var jsonSerializerOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-             NumberHandling = JsonNumberHandling.WriteAsString,
+            NumberHandling = JsonNumberHandling.WriteAsString,
         };
         jsonSerializerOptions.Converters.Add(new Int32Converter());
         jsonSerializerOptions.Converters.Add(new Int64Converter());

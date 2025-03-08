@@ -1,6 +1,4 @@
 ﻿using SastImg.Client.Model;
-using SastImg.Client.Service.API;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace SastImg.Client.ViewModels
@@ -9,12 +7,12 @@ namespace SastImg.Client.ViewModels
     {
         private ImageModel _imageInfo;
 
-        
+
 
         public byte[] ImageData { get; set; }
-        public ImageModel ImageInfo 
-        { 
-            get=>_imageInfo; 
+        public ImageModel ImageInfo
+        {
+            get => _imageInfo;
             set
             {
                 _imageInfo = value;
@@ -37,7 +35,7 @@ namespace SastImg.Client.ViewModels
 
         public async Task LikeImageAsync(long albumId)
         {
-            var response = await App.API.Image.LikeImageAsync(albumId,ImageInfo.Id);
+            var response = await App.API.Image.LikeImageAsync(albumId, ImageInfo.Id);
             if (response.IsSuccessStatusCode)
             {
                 ImageInfo.Likes++;

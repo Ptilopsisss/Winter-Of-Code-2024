@@ -1,8 +1,3 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using CommunityToolkit.Labs.WinUI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
@@ -11,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SastImg.Client.Helpers;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.Graphics;
 
@@ -162,16 +158,6 @@ public sealed partial class ExpandableUserAvatar : UserControl
     // Using a DependencyProperty as the backing store for Email.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty EmailProperty =
         DependencyProperty.Register("Email", typeof(string), typeof(ExpandableUserAvatar), new PropertyMetadata(null));
-
-    public Uri AvatarUri
-    {
-        get { return (Uri)GetValue(AvatarUriProperty); }
-        set { SetValue(AvatarUriProperty, value); }
-    }
-
-    // Using a DependencyProperty as the backing store for AvatarUri.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty AvatarUriProperty =
-        DependencyProperty.Register("AvatarUri", typeof(Uri), typeof(ExpandableUserAvatar), new PropertyMetadata(null));
 
     public BitmapImage Avatar
     {

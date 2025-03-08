@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SastImg.Client.Service.API;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SastImg.Client.Model;
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace SastImg.Client.Views
 {
@@ -42,14 +36,14 @@ namespace SastImg.Client.Views
 
         public async Task LoadCategoriesAsync()
         {
-                var categories = await App.API.Category.GetCategoryAsync();
-                var categoryModel = new ObservableCollection<CategoryModel>();
-                foreach (var categoryDto in categories.Content)
-                {
-                    var category = await CategoryModel.GetModelAsync(categoryDto);
-                    categoryModel.Add(category);
-                }
-                Categories = categoryModel;
+            var categories = await App.API.Category.GetCategoryAsync();
+            var categoryModel = new ObservableCollection<CategoryModel>();
+            foreach (var categoryDto in categories.Content)
+            {
+                var category = await CategoryModel.GetModelAsync(categoryDto);
+                categoryModel.Add(category);
+            }
+            Categories = categoryModel;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

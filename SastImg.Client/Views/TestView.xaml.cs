@@ -1,11 +1,9 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml;
 using SastImg.Client.Model;
 using SastImg.Client.ViewModels;
-using System.Reflection;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SastImg.Client.Views
 {

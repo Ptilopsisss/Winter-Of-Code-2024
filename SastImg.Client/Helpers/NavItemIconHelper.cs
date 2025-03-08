@@ -7,12 +7,12 @@ namespace SastImg.Client.Helpers;
 
 public class NavItemIconHelper
 {
-    public static object GetSelectedIcon (DependencyObject obj)
+    public static object GetSelectedIcon(DependencyObject obj)
     {
         return obj.GetValue(SelectedIconProperty);
     }
 
-    public static void SetSelectedIcon (DependencyObject obj, object value)
+    public static void SetSelectedIcon(DependencyObject obj, object value)
     {
         obj.SetValue(SelectedIconProperty, value);
     }
@@ -24,7 +24,7 @@ public class NavItemIconHelper
     /// Gets the value of <see cref="ShowNotificationDotProperty" /> for a <see cref="DependencyObject" />
     /// </summary>
     /// <returns>Returns a boolean indicating whether the notification dot should be shown.</returns>
-    public static bool GetShowNotificationDot (DependencyObject obj)
+    public static bool GetShowNotificationDot(DependencyObject obj)
     {
         return (bool)obj.GetValue(ShowNotificationDotProperty);
     }
@@ -32,7 +32,7 @@ public class NavItemIconHelper
     /// <summary>
     /// Sets <see cref="ShowNotificationDotProperty" /> on a <see cref="DependencyObject" />
     /// </summary>
-    public static void SetShowNotificationDot (DependencyObject obj, bool value)
+    public static void SetShowNotificationDot(DependencyObject obj, bool value)
     {
         obj.SetValue(ShowNotificationDotProperty, value);
     }
@@ -47,7 +47,7 @@ public class NavItemIconHelper
     /// Gets the value of <see cref="UnselectedIconProperty"/> for a <see cref="DependencyObject"/>
     /// </summary>
     /// <returns>Returns the unselected icon as an object.</returns>
-    public static object GetUnselectedIcon (DependencyObject obj)
+    public static object GetUnselectedIcon(DependencyObject obj)
     {
         return (object)obj.GetValue(UnselectedIconProperty);
     }
@@ -55,7 +55,7 @@ public class NavItemIconHelper
     /// <summary>
     /// Sets the value of <see cref="UnselectedIconProperty"/> for a <see cref="DependencyObject"/>
     /// </summary>
-    public static void SetUnselectedIcon (DependencyObject obj, object value)
+    public static void SetUnselectedIcon(DependencyObject obj, object value)
     {
         obj.SetValue(UnselectedIconProperty, value);
     }
@@ -66,12 +66,12 @@ public class NavItemIconHelper
     public static readonly DependencyProperty UnselectedIconProperty =
         DependencyProperty.RegisterAttached("UnselectedIcon", typeof(object), typeof(NavItemIconHelper), new PropertyMetadata(null));
 
-    public static Visibility GetStaticIconVisibility (DependencyObject obj)
+    public static Visibility GetStaticIconVisibility(DependencyObject obj)
     {
         return (Visibility)obj.GetValue(StaticIconVisibilityProperty);
     }
 
-    public static void SetStaticIconVisibility (DependencyObject obj, Visibility value)
+    public static void SetStaticIconVisibility(DependencyObject obj, Visibility value)
     {
         obj.SetValue(StaticIconVisibilityProperty, value);
     }

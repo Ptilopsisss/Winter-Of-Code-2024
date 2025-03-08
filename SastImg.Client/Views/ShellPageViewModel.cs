@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using SastImg.Client.Service.API;
 using SastImg.Client.Views.Dialogs;
 using System.Windows.Input;
-using WinStorage = Windows.Storage;
 
 namespace SastImg.Client.Views;
 public partial class ShellPageViewModel : ObservableObject
@@ -22,49 +21,12 @@ public partial class ShellPageViewModel : ObservableObject
 
     public bool IsLoggedIn => App.AuthService.IsLoggedIn;
 
-    private Uri _avatarUri;
-    public Uri AvatarUri
-    {
-        get => _avatarUri;
-        set => SetProperty(ref _avatarUri, value);
-    }
-
     private BitmapImage _avatar;
     public BitmapImage Avatar
     {
         get => _avatar;
         set => SetProperty(ref _avatar, value);
     }
-
-    //private async void LoadUserAvatar()
-    //{
-    //    if (IsLoggedIn)
-    //    {
-    //        var result = await App.API.User.GetAvatarAsync(App.AuthService.Id);
-    //        if (result.IsSuccessStatusCode && result.Content != null)
-    //        {
-    //            var localFolder = WinStorage.ApplicationData.Current.LocalFolder;
-    //            var avatarFile = await localFolder.CreateFileAsync("avatar.png", WinStorage.CreationCollisionOption.ReplaceExisting);
-
-    //            using (var fileStream = await avatarFile.OpenStreamForWriteAsync())
-    //            using (var memoryStream = new MemoryStream(result.Content.FileStream))
-    //            {
-    //                await memoryStream.CopyToAsync(fileStream);
-    //            }
-
-    //            AvatarUri = new Uri(avatarFile.Path);
-    //            System.Diagnostics.Debug.WriteLine($"Avatar saved to: {avatarFile.Path}");
-    //        }
-    //        else
-    //        {
-    //            AvatarUri = new Uri("ms-appx:///Assets/DefaultAvatar.png");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        AvatarUri = new Uri("ms-appx:///Assets/DefaultAvatar.png");
-    //    }
-    //}
 
     private async void LoadUserAvatar()
     {
@@ -200,7 +162,7 @@ public partial class ShellPageViewModel : ObservableObject
                 args.Cancel = true;
                 return;
             }
-            else if(password.Length<6 || password.Length>200)
+            else if (password.Length < 6 || password.Length > 200)
             {
                 var errorDialog = new ContentDialog
                 {
@@ -230,7 +192,7 @@ public partial class ShellPageViewModel : ObservableObject
                 return;
             }
 
-            if(username.Length<2 || username.Length>160)
+            if (username.Length < 2 || username.Length > 160)
             {
                 var errorDialog = new ContentDialog
                 {
@@ -245,7 +207,7 @@ public partial class ShellPageViewModel : ObservableObject
                 return;
             }
 
-            if(code<100000 ||code>999999)
+            if (code < 100000 || code > 999999)
             {
                 var errorDialog = new ContentDialog
                 {
@@ -460,6 +422,81 @@ public partial class ShellPageViewModel : ObservableObject
                     XamlRoot = App.MainWindow.Content.XamlRoot
                 };
                 await successDialog.ShowAsync();
+            }
+        };
+
+        await dialog.ShowAsync();
+    });
+
+    public ICommand UpdateUsernameCommand => new RelayCommand(async () =>
+    {
+        var dialog = new ContentDialog
+        {
+            Title = "Update Username",
+            PrimaryButtonText = "Update",
+            CloseButtonText = "Cancel",
+            Content = new StackPanel
+            {
+                Spacing = 12,
+                Children =
+                {
+                    new TextBox { Header = "New Username", Name = "UsernameTextBox" }
+                }
+            },
+            XamlRoot = App.MainWindow.Content.XamlRoot
+        };
+
+        dialog.PrimaryButtonClick += async (s, args) =>
+        {
+            var stackPanel = (StackPanel)dialog.Content;
+            var usernameTextBox = stackPanel.Children.OfType<TextBox>().First(c => c.Name == "UsernameTextBox");
+
+            var newUsername = usernameTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(newUsername))
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = "Username cannot be empty.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindow.Content.XamlRoot
+                };
+                dialog.Hide();
+                await errorDialog.ShowAsync();
+                args.Cancel = true;
+                return;
+            }
+
+            // 调用更新用户名 API
+            var resetUsernameRequest = new ResetUsernameRequest
+            {
+                Username = newUsername
+            };
+            var result = await App.API.Account.ResetUsernameAsync(resetUsernameRequest);
+            if (!result.IsSuccessStatusCode)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = "Failed to update username.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindow.Content.XamlRoot
+                };
+                await errorDialog.ShowAsync();
+                args.Cancel = true;
+            }
+            else
+            {
+                var successDialog = new ContentDialog
+                {
+                    Title = "Success",
+                    Content = "Username updated successfully.",
+                    CloseButtonText = "OK",
+                    XamlRoot = App.MainWindow.Content.XamlRoot
+                };
+                await successDialog.ShowAsync();
+                OnPropertyChanged(nameof(Username));
             }
         };
 

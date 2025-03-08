@@ -3,9 +3,6 @@ using Microsoft.UI.Xaml.Controls;
 using Refit;
 using SastImg.Client.Model;
 using SastImg.Client.Service.API;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SastImg.Client.Views
 {

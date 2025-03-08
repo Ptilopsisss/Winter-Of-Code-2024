@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SastImg.Client.Service.API;
-using SastImg.Client.Model;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace SastImg.Client.Views
 {

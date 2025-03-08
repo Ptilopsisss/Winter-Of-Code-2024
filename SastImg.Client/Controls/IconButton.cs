@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 namespace SastImg.Client.Controls;
 public sealed class IconButton : Button
 {
-    public IconButton ( )
+    public IconButton()
     {
         this.DefaultStyleKey = typeof(IconButton);
     }

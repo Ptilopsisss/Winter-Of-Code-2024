@@ -2,8 +2,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Refit;
 using SastImg.Client.Service.API;
-using System;
-using System.Threading.Tasks;
 
 namespace SastImg.Client.Views
 {

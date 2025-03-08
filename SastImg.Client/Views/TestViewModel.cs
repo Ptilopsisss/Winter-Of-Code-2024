@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SastImg.Client.Model;
-using SastImg.Client.Service.API;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace SastImg.Client.ViewModels
 {
@@ -109,9 +107,9 @@ namespace SastImg.Client.ViewModels
 
         //public async Task<bool> LoadAlbumSubscriptionAsync(long albumId)
         //{
-            //var detailedAlbum = await App.API.Album.GetDetailedAlbumAsync(albumId);
-            //if (detailedAlbum.Content.SubscribeCount) return;
-            
+        //var detailedAlbum = await App.API.Album.GetDetailedAlbumAsync(albumId);
+        //if (detailedAlbum.Content.SubscribeCount) return;
+
         //}
 
         public async Task LoadRemovedAlbumsAsync()
